@@ -40,29 +40,31 @@ const currentSchematicsDownload: Set<string> = new Set()
 
 const nanoSecondsToMilliseconds = (nanoSeconds: bigint): bigint => nanoSeconds / 1000000n
 
+const logger = new Logger(false)
+
 const tryDownloadSchematic = async () => {
 	if (schematicsDownloadQueue.isEmpty() && currentSchematicsDownload.size === 0) {
 		totalTimeTaken = process.hrtime.bigint() - startTime
 
-		console.log(`---------------------------------------`)
-		console.log(`Processed dumps: ${Array.from(processedDumps).join(', ')}.`)
-		console.log(`Processed dumps count: ${processedDumps.size}.`)
-		console.log(`Skipped dumps: ${Array.from(skippedDumps).join(', ')}.`)
-		console.log(`Skipped dumps count: ${skippedDumps.size}.`)
-		console.log(
+		logger.info(`---------------------------------------`)
+		logger.info(`Processed dumps: ${Array.from(processedDumps).join(', ')}.`)
+		logger.info(`Processed dumps count: ${processedDumps.size}.`)
+		logger.info(`Skipped dumps: ${Array.from(skippedDumps).join(', ')}.`)
+		logger.info(`Skipped dumps count: ${skippedDumps.size}.`)
+		logger.info(
 			`Skipped schematic types: ${skippedSchematicTypes.map(it => SchematicType[it]).join(', ')}.`,
 		)
-		console.log(`Downloaded schematics: ${downloadedSchematics}.`)
-		console.log(`Failed schematics download: ${failedSchematicsDownload}.`)
-		console.log(`Rate limited schematics download: ${rateLimitedSchematicsDownload}.`)
-		console.log(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
-		console.log(`Total download request: ${totalDownloadRequest}.`)
+		logger.info(`Downloaded schematics: ${downloadedSchematics}.`)
+		logger.info(`Failed schematics download: ${failedSchematicsDownload}.`)
+		logger.info(`Rate limited schematics download: ${rateLimitedSchematicsDownload}.`)
+		logger.info(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
+		logger.info(`Total download request: ${totalDownloadRequest}.`)
 
-		console.log(`Time taken: ${nanoSecondsToMilliseconds(totalTimeTaken)}ms`)
-		console.log(
+		logger.info(`Time taken: ${nanoSecondsToMilliseconds(totalTimeTaken)}ms`)
+		logger.info(
 			`Time taken to download: ${nanoSecondsToMilliseconds(totalTimeTakenDownloading)}ms`,
 		)
-		console.log(`Time taken to save: ${nanoSecondsToMilliseconds(totalTimeTakenSaving)}ms`)
+		logger.info(`Time taken to save: ${nanoSecondsToMilliseconds(totalTimeTakenSaving)}ms`)
 
 		return
 	}
@@ -75,7 +77,7 @@ const tryDownloadSchematic = async () => {
 
 		const fileName = `${schematic.id}-${schematic.fileName}`
 
-		console.log(`Started downloading ${fileName}`)
+		logger.debug(`Started downloading ${fileName}`)
 
 		currentSchematicsDownload.add(fileName)
 
@@ -100,7 +102,11 @@ const tryDownloadSchematic = async () => {
 
 			totalTimeTakenSaving += process.hrtime.bigint() - startSavingTime
 		} catch (error) {
-			console.log(`Error occured while trying to download ${fileName}.`, error)
+			if (error instanceof Error) {
+				logger.error(`Error occured while trying to download ${fileName}.`, error)
+			} else {
+				logger.error(`Error occured while trying to download ${fileName}. ${error}.`)
+			}
 		}
 
 		if (response === null) {
@@ -116,12 +122,12 @@ const tryDownloadSchematic = async () => {
 				if (response.status === 429) {
 					rateLimitedSchematicsDownload += 1
 
-					console.log(`Rate limited occured while trying to download ${fileName}.`)
+					logger.error(`Rate limited occured while trying to download ${fileName}.`)
 
 					// Wait for 10 secs if rate limited
 					await new Promise<void>(resolve => setTimeout(() => resolve(), 10_000))
 				} else {
-					console.log(
+					logger.error(
 						`Unknown http status code occured while trying to download ${fileName} with the status ${response.status}.`,
 					)
 				}
@@ -132,7 +138,7 @@ const tryDownloadSchematic = async () => {
 			} else {
 				succeededSchematicsDownload += 1
 
-				console.log(`Downloaded ${fileName}`)
+				logger.debug(`Downloaded ${fileName}`)
 
 				currentSchematicsDownload.delete(fileName)
 			}
