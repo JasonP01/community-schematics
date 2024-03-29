@@ -46,11 +46,11 @@ const tryDownloadSchematic = async () => {
 		console.log(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
 		console.log(`Total download request: ${totalDownloadRequest}.`)
 
-		console.log(`Time taken: ${nanoSecondsToMilliseconds(totalTimeTaken)}`)
+		console.log(`Time taken: ${nanoSecondsToMilliseconds(totalTimeTaken)}ms`)
 		console.log(
-			`Time taken to download: ${nanoSecondsToMilliseconds(totalTimeTakenDownloading)}`,
+			`Time taken to download: ${nanoSecondsToMilliseconds(totalTimeTakenDownloading)}ms`,
 		)
-		console.log(`Time taken to save: ${nanoSecondsToMilliseconds(totalTimeTakenSaving)}`)
+		console.log(`Time taken to save: ${nanoSecondsToMilliseconds(totalTimeTakenSaving)}ms`)
 
 		return
 	}
