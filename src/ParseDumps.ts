@@ -20,7 +20,7 @@ const dumpFiles = await fs.readdir(dumpsDir)
 
 const maxParallelDownload = 10
 
-let processedDumps = 0
+const processedDumps: Set<string> = new Set()
 let downloadedSchematics = 0
 let totalDownloadRequest = 0
 let failedSchematicsDownload = 0
@@ -40,7 +40,8 @@ const tryDownloadSchematic = async () => {
 		totalTimeTaken = process.hrtime.bigint() - startTime
 
 		console.log(`---------------------------------------`)
-		console.log(`Processed dumps: ${processedDumps}.`)
+		console.log(`Processed dumps: ${Array.from(processedDumps).join(', ')}.`)
+		console.log(`Processed dumps count: ${processedDumps.size}.`)
 		console.log(`Downloaded schematics: ${downloadedSchematics}.`)
 		console.log(`Failed schematics download: ${failedSchematicsDownload}.`)
 		console.log(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
@@ -135,7 +136,7 @@ const queueSchematicDownload = (type: SchematicType, schematic: Schematic) => {
 }
 
 for (const dumpFile of dumpFiles) {
-	processedDumps += 1
+	processedDumps.add(dumpFile)
 
 	const dumpEncoded = await fs.readFile(path.join(dumpsDir, dumpFile), 'utf-8')
 
