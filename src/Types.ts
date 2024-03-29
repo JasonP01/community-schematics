@@ -1,5 +1,3 @@
-import { SchematicType } from 'Dump'
-
 export interface Schematic {
 	/**
 	 * Discord message id for the schematic
@@ -28,4 +26,9 @@ export interface Dump {
 	schematics: Schematic[]
 	lastProcessedMessageID: string
 	schematicType: SchematicType
+}
+
+export enum SchematicType {
+	OfficialDiscordSchematic = 'OfficialDiscordSchematic',
+	OfficialDiscordCuratedSchematic = 'OfficialDiscordCuratedSchematic',
 }

@@ -2,8 +2,7 @@ import fs from 'fs/promises'
 
 import { fileURLToPath } from 'url'
 import path from 'path'
-import { Dump, Schematic } from 'Types'
-import { SchematicType } from 'Dump'
+import { Dump, Schematic, SchematicType } from 'Types'
 import { Queue } from '@datastructures-js/queue'
 
 const startTime = process.hrtime.bigint()

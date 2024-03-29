@@ -1,16 +1,11 @@
 // This use self bot to dump all schematics from discord
 // Self bot implementation: https://github.com/rigwild/discord-self-bot-console
 
-import { Dump, Schematic } from './Types.js'
+import { Dump, Schematic, SchematicType } from './Types.js'
 
 interface SaveDataOptions {
 	tryLocalStorage?: boolean
 	file?: boolean
-}
-
-export enum SchematicType {
-	OfficialDiscordSchematic = 'OfficialDiscordSchematic',
-	OfficialDiscordCuratedSchematic = 'OfficialDiscordCuratedSchematic',
 }
 
 const schematicTypeToDiscordChannelIDLookup = {

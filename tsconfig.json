@@ -27,9 +27,8 @@
 		"resolveJsonModule": true,
 		"moduleResolution": "Bundler",
 		"outDir": "./dist/",
-		"typeRoots": ["./node_modules/@types","./src/"],
-		"baseUrl": "src",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"typeRoots": ["./node_modules/@types", "./src/"],
+		"baseUrl": "src"
 	},
 	"include": ["src"]
 }

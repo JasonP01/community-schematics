@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"build:dump": "tsc",
-		"parseDumps": "tsx ./src/parseDumps.ts",
+		"parseDumps": "tsx ./src/ParseDumps.ts",
 		"clean:schematics": "rimraf ./schematics",
 		"prettier:fix": "prettier -w \"./src/**/*.{ts,json}\"",
 		"prettier:check": "prettier -c \"./src/**/*.{ts,json}\""
