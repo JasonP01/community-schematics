@@ -19,9 +19,12 @@ await fs.mkdir(dumpsDir, { recursive: true })
 const dumpFiles = await fs.readdir(dumpsDir)
 
 const maxParallelDownload = 10
-const skippedSchematicType: readonly SchematicType[] = [SchematicType.OfficialDiscordSchematic]
+const skippedSchematicTypes: readonly SchematicType[] = [
+	SchematicType.OfficialDiscordCuratedSchematic,
+]
 
 const processedDumps: Set<string> = new Set()
+const skippedDumps: Set<string> = new Set()
 let downloadedSchematics = 0
 let totalDownloadRequest = 0
 let failedSchematicsDownload = 0
@@ -43,6 +46,11 @@ const tryDownloadSchematic = async () => {
 		console.log(`---------------------------------------`)
 		console.log(`Processed dumps: ${Array.from(processedDumps).join(', ')}.`)
 		console.log(`Processed dumps count: ${processedDumps.size}.`)
+		console.log(`Skipped dumps: ${Array.from(skippedDumps).join(', ')}.`)
+		console.log(`Skipped dumps count: ${skippedDumps.size}.`)
+		console.log(
+			`Skipped schematic types: ${skippedSchematicTypes.map(it => SchematicType[it]).join(', ')}.`,
+		)
 		console.log(`Downloaded schematics: ${downloadedSchematics}.`)
 		console.log(`Failed schematics download: ${failedSchematicsDownload}.`)
 		console.log(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
@@ -143,7 +151,11 @@ for (const dumpFile of dumpFiles) {
 
 	const dump = JSON.parse(dumpEncoded) as Dump
 
-	if (skippedSchematicType.includes(dump.schematicType)) continue
+	if (skippedSchematicTypes.includes(dump.schematicType)) {
+		skippedDumps.add(dumpFile)
+
+		continue
+	}
 
 	const typeName = SchematicType[dump.schematicType]
 
