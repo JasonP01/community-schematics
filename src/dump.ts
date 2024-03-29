@@ -1,49 +1,28 @@
 // This use self bot to dump all schematics from discord
 // Self bot implementation: https://github.com/rigwild/discord-self-bot-console
 
-interface Schematic {
-	fileName: string
-
-	/**
-	 * Download url
-	 */
-	url: string
-
-	/**
-	 * File size in bytes
-	 */
-	size: number
-
-	/**
-	 * Epoch in milliseconds on when the schematic was posted
-	 */
-	date: number
-}
-
-interface Data {
-	schematics: Schematic[]
-}
+import { Dump, Schematic } from './Types.js'
 
 interface SaveDataOptions {
 	tryLocalStorage?: boolean
 	file?: boolean
 }
 
-enum SchematicChannel {
-	Schematic,
-	CuratedSchematic,
+export enum SchematicType {
+	OfficialDiscordSchematic = 'OfficialDiscordSchematic',
+	OfficialDiscordCuratedSchematic = 'OfficialDiscordCuratedSchematic',
 }
 
-const schematicChannelToDiscordChannelIDLookup = {
-	[SchematicChannel.Schematic]: '640604827344306207',
-	[SchematicChannel.CuratedSchematic]: '878022862915653723',
+const schematicTypeToDiscordChannelIDLookup = {
+	[SchematicType.OfficialDiscordSchematic]: '640604827344306207',
+	[SchematicType.OfficialDiscordCuratedSchematic]: '878022862915653723',
 } as const
 
 const localStoragePrefix = 'Kennarddh'
 
 const getLocalStorageKey = (name: string) => `${localStoragePrefix}-${name}`
 
-const saveData = (name: string, data: Data, options: SaveDataOptions) => {
+const saveData = (name: string, data: Dump, options: SaveDataOptions) => {
 	const encodedData = JSON.stringify(data)
 
 	const storeName = getLocalStorageKey(name)
@@ -111,9 +90,11 @@ const downloadStringAsFile = (fileName: string, text: string, mime: string = 'te
 	document.body.removeChild(element)
 }
 
-const data: Data = { schematics: [] }
-
-const processMessages = (messages: Message[], validateSchemEligibility: boolean) => {
+const processMessages = (
+	schematics: Schematic[],
+	messages: Message[],
+	validateSchemEligibility: boolean,
+) => {
 	for (const message of messages) {
 		const date = new Date(message.timestamp).getTime()
 
@@ -131,7 +112,8 @@ const processMessages = (messages: Message[], validateSchemEligibility: boolean)
 		if (!mschAttachment) continue
 		if (!mschAttachment.filename.endsWith('.msch')) continue
 
-		data.schematics.push({
+		schematics.push({
+			id: message.id,
 			fileName: mschAttachment.filename,
 			size: mschAttachment.size,
 			url: mschAttachment.url,
@@ -142,12 +124,14 @@ const processMessages = (messages: Message[], validateSchemEligibility: boolean)
 
 bringBackLocalStorage()
 
-const schematicChannel = SchematicChannel.Schematic
-const channelID = schematicChannelToDiscordChannelIDLookup[schematicChannel]
+const schematicType = SchematicType.OfficialDiscordCuratedSchematic
+const channelID = schematicTypeToDiscordChannelIDLookup[schematicType]
 
 let beforeID: string | null = null
 
 let i = 1
+
+const schematics: Schematic[] = []
 
 while (true) {
 	console.log(`Scrapping ${i}`)
@@ -165,7 +149,11 @@ while (true) {
 	if (hasEnded) break
 
 	// Don't check CuratedSchematic eligibility
-	processMessages(messages, schematicChannel != SchematicChannel.CuratedSchematic)
+	processMessages(
+		schematics,
+		messages,
+		schematicType != SchematicType.OfficialDiscordCuratedSchematic,
+	)
 
 	// There must be last message because hasEnded is false
 	const oldestID = messages.at(-1)!.id
@@ -181,9 +169,15 @@ while (true) {
 	await api.delay(delayMS)
 }
 
-console.log(`Done with ${data.schematics.length} schematics. Saving...`)
+console.log(`Done with ${schematics.length} schematics. Saving...`)
 
-saveData(SchematicChannel[schematicChannel], data, {
+const data: Dump = {
+	schematics,
+	lastProcessedMessageID: schematics[0]!.id,
+	schematicType,
+}
+
+saveData(SchematicType[schematicType], data, {
 	tryLocalStorage: true,
 	file: true,
 })
