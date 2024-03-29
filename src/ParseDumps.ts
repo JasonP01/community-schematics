@@ -42,7 +42,7 @@ const tryDownloadSchematic = async () => {
 		console.log(`---------------------------------------`)
 		console.log(`Processed dumps: ${processedDumps}.`)
 		console.log(`Downloaded schematics: ${downloadedSchematics}.`)
-		console.log(`Failed schematics download: ${downloadedSchematics}.`)
+		console.log(`Failed schematics download: ${failedSchematicsDownload}.`)
 		console.log(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
 		console.log(`Total download request: ${totalDownloadRequest}.`)
 
