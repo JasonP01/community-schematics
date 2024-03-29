@@ -2,6 +2,7 @@
 	"name": "community-schematics",
 	"version": "1.0.0",
 	"description": "Collection of schematics posted on Official Mindustry Discord #schematics and #curated-schematics channels.",
+	"type": "module",
 	"scripts": {
 		"build:dump": "tsc",
 		"parseDumps": "tsx ./src/parseDumps.ts",
