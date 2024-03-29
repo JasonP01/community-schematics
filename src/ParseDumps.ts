@@ -116,7 +116,7 @@ const tryDownloadSchematic = async () => {
 
 			currentSchematicsDownload.delete(fileName)
 		} else {
-			if (response.status < 200 || response.status >= 300) {
+			if (response.ok) {
 				failedSchematicsDownload += 1
 
 				if (response.status === 429) {
