@@ -19,6 +19,7 @@ await fs.mkdir(dumpsDir, { recursive: true })
 const dumpFiles = await fs.readdir(dumpsDir)
 
 const maxParallelDownload = 10
+const skippedSchematicType: readonly SchematicType[] = [SchematicType.OfficialDiscordSchematic]
 
 const processedDumps: Set<string> = new Set()
 let downloadedSchematics = 0
@@ -141,6 +142,8 @@ for (const dumpFile of dumpFiles) {
 	const dumpEncoded = await fs.readFile(path.join(dumpsDir, dumpFile), 'utf-8')
 
 	const dump = JSON.parse(dumpEncoded) as Dump
+
+	if (skippedSchematicType.includes(dump.schematicType)) continue
 
 	const typeName = SchematicType[dump.schematicType]
 
