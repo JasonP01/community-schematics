@@ -28,6 +28,7 @@ const skippedDumps: Set<string> = new Set()
 let downloadedSchematics = 0
 let totalDownloadRequest = 0
 let failedSchematicsDownload = 0
+let rateLimitedSchematicsDownload = 0
 let succeededSchematicsDownload = 0
 
 let totalTimeTakenDownloading = 0n
@@ -53,6 +54,7 @@ const tryDownloadSchematic = async () => {
 		)
 		console.log(`Downloaded schematics: ${downloadedSchematics}.`)
 		console.log(`Failed schematics download: ${failedSchematicsDownload}.`)
+		console.log(`Rate limited schematics download: ${rateLimitedSchematicsDownload}.`)
 		console.log(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
 		console.log(`Total download request: ${totalDownloadRequest}.`)
 
@@ -112,6 +114,8 @@ const tryDownloadSchematic = async () => {
 				failedSchematicsDownload += 1
 
 				if (response.status === 429) {
+					rateLimitedSchematicsDownload += 1
+
 					console.log(`Rate limited occured while trying to download ${fileName}.`)
 
 					// Wait for 10 secs if rate limited
