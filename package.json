@@ -1,0 +1,27 @@
+{
+	"name": "community-schematics",
+	"version": "1.0.0",
+	"description": "Collection of schematics posted on Official Mindustry Discord #schematics and #curated-schematics channels.",
+	"scripts": {
+		"build:dump": "tsc ./src/dump.ts",
+		"clean:schematics": "rimraf ./schematics",
+		"prettier:fix": "prettier -w \"./src/**/*.{ts,json}\"",
+		"prettier:check": "prettier -c \"./src/**/*.{ts,json}\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JasonP01/community-schematics.git"
+	},
+	"author": "kennarddh",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/JasonP01/community-schematics/issues"
+	},
+	"homepage": "https://github.com/JasonP01/community-schematics#readme",
+	"devDependencies": {
+		"prettier": "^3.2.5",
+		"rimraf": "^5.0.5",
+		"tsx": "^4.7.1",
+		"typescript": "^5.4.3"
+	}
+}

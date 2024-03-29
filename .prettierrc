@@ -1,0 +1,39 @@
+{
+	"tabWidth": 4,
+	"singleQuote": true,
+	"useTabs": true,
+	"jsxSingleQuote": true,
+	"semi": false,
+	"arrowParens": "avoid",
+	"endOfLine": "lf",
+	"printWidth": 100,
+
+	"importOrder": [
+		"^express$",
+		"^express-validator$",
+		"^http$",
+		"^path$",
+		"^bcrypt$",
+		"^mongoose$",
+		"^winston",
+		"^compression$",
+		"^cookie-parser$",
+		"^helmet$",
+		"<THIRD_PARTY_MODULES>",
+		"^App$",
+		"^Utils/",
+		"^Services/",
+		"^Models/",
+		"^Middlewares/",
+		"^Routes",
+		"^Database",
+		"^Versions/(.*)/Controllers/",
+		"^Versions/(.*)/Routes/",
+		"^Versions/(.*)/Validation/",
+		"^[./]"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true,
+
+	"plugins": ["@trivago/prettier-plugin-sort-imports"]
+}
