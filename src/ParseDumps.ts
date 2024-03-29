@@ -155,8 +155,6 @@ const queueSchematicDownload = (type: SchematicType, schematic: Schematic) => {
 }
 
 for (const dumpFile of dumpFiles) {
-	processedDumps.add(dumpFile)
-
 	const dumpEncoded = await fs.readFile(path.join(dumpsDir, dumpFile), 'utf-8')
 
 	const dump = JSON.parse(dumpEncoded) as Dump
@@ -165,6 +163,8 @@ for (const dumpFile of dumpFiles) {
 		skippedDumps.add(dumpFile)
 
 		continue
+	} else {
+		processedDumps.add(dumpFile)
 	}
 
 	const typeName = SchematicType[dump.schematicType]
