@@ -39,7 +39,7 @@ const tryDownloadSchematic = async () => {
 	if (schematicsDownloadQueue.isEmpty() && currentSchematicsDownload.size === 0) {
 		totalTimeTaken = process.hrtime.bigint() - startTime
 
-		console.log(`Downloads done in .`)
+		console.log(`---------------------------------------`)
 		console.log(`Processed dumps: ${processedDumps}.`)
 		console.log(`Downloaded schematics: ${downloadedSchematics}.`)
 		console.log(`Failed schematics download: ${downloadedSchematics}.`)
