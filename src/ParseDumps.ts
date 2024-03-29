@@ -55,7 +55,10 @@ const tryDownloadSchematic = async () => {
 		return
 	}
 
-	if (currentSchematicsDownload.size < maxParallelDownload) {
+	if (
+		!schematicsDownloadQueue.isEmpty() &&
+		currentSchematicsDownload.size < maxParallelDownload
+	) {
 		const { type, schematic } = schematicsDownloadQueue.dequeue()
 
 		const fileName = `${schematic.id}-${schematic.fileName}`
