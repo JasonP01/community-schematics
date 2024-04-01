@@ -43,7 +43,7 @@ const determineSchematicMindustryVersion = async (
 
 	if (schematicVersion.value === 0) return MindustryVersion.V5
 
-	const buffer = await Inflate(deflatedBuffer)
+	const buffer = await Inflate(deflatedBuffer, false)
 
 	// Skip width and height
 	buffer.skipShort(2)
