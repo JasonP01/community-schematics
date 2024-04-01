@@ -23,3 +23,5 @@ class Logger {
 		if (error) console.error(error)
 	}
 }
+
+export default Logger

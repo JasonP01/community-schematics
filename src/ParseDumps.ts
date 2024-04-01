@@ -5,6 +5,7 @@ import path from 'path'
 import { Dump, Schematic, SchematicType } from 'Types'
 import { Queue } from '@datastructures-js/queue'
 import { NanoSecondsToMilliseconds } from 'Utils/Time'
+import Logger from 'Logger'
 
 const startTime = process.hrtime.bigint()
 

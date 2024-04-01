@@ -6,6 +6,7 @@ import CustomBuffer from 'CustomBuffer'
 import { Inflate } from 'Utils/Compression'
 import { MindustryVersion, SchematicType } from 'Types'
 import { NanoSecondsToMilliseconds } from 'Utils/Time'
+import Logger from 'Logger'
 
 const startTime = process.hrtime.bigint()
 
