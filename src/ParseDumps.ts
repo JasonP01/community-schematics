@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 import { Dump, Schematic, SchematicType } from 'Types'
 import { Queue } from '@datastructures-js/queue'
+import { NanoSecondsToMilliseconds } from 'Utils/Time'
 
 const startTime = process.hrtime.bigint()
 
@@ -38,8 +39,6 @@ let totalTimeTaken = 0n
 const schematicsDownloadQueue: Queue<{ type: SchematicType; schematic: Schematic }> = new Queue()
 const currentSchematicsDownload: Set<string> = new Set()
 
-const nanoSecondsToMilliseconds = (nanoSeconds: bigint): bigint => nanoSeconds / 1000000n
-
 const logger = new Logger(false)
 
 const tryDownloadSchematic = async () => {
@@ -60,11 +59,11 @@ const tryDownloadSchematic = async () => {
 		logger.info(`Succeeded schematics download: ${succeededSchematicsDownload}.`)
 		logger.info(`Total download request: ${totalDownloadRequest}.`)
 
-		logger.info(`Time taken: ${nanoSecondsToMilliseconds(totalTimeTaken)}ms`)
+		logger.info(`Time taken: ${NanoSecondsToMilliseconds(totalTimeTaken)}ms`)
 		logger.info(
-			`Time taken to download: ${nanoSecondsToMilliseconds(totalTimeTakenDownloading)}ms`,
+			`Time taken to download: ${NanoSecondsToMilliseconds(totalTimeTakenDownloading)}ms`,
 		)
-		logger.info(`Time taken to save: ${nanoSecondsToMilliseconds(totalTimeTakenSaving)}ms`)
+		logger.info(`Time taken to save: ${NanoSecondsToMilliseconds(totalTimeTakenSaving)}ms`)
 
 		return
 	}

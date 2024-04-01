@@ -1,0 +1,45 @@
+export enum Gamemode {
+	Suvival,
+	Sandbox,
+	Attack,
+	PVP,
+	Editor,
+}
+
+export enum SorterID {
+	Copper = 0,
+	Lead = 1,
+	Metaglass = 2,
+	Graphite = 3,
+	Sand = 4,
+	Coal = 5,
+	Titanium = 6,
+	Thorium = 7,
+	Scrap = 8,
+	Silicon = 9,
+	Plastanium = 10,
+	PhaseFabric = 11,
+	SurgeAlloy = 12,
+	SporePod = 13,
+	BlastCompound = 14,
+	Pyratite = 15,
+}
+
+export const SorterIDToColor = {
+	[SorterID.Copper] : '#d99d73',
+	[SorterID.Lead] : '#8c7fa9',
+	[SorterID.Metaglass] : '#ebeef5',
+	[SorterID.Graphite] : '#b2c6d2',
+	[SorterID.Sand] : '#f7cba4',
+	[SorterID.Coal] : '#272727',
+	[SorterID.Titanium] : '#8da1e3',
+	[SorterID.Thorium] : '#f9a3c7',
+	[SorterID.Scrap] : '#777777',
+	[SorterID.Silicon] : '#53565c',
+	[SorterID.Plastanium] : '#cbd97f',
+	[SorterID.PhaseFabric] : '#f4ba6e',
+	[SorterID.SurgeAlloy] : '#f3e979',
+	[SorterID.SporePod] : '#7457ce',
+	[SorterID.BlastCompound] : '#ff795e',
+	[SorterID.Pyratite] : '#ffaa5f',
+}as const

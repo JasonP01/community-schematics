@@ -32,3 +32,9 @@ export enum SchematicType {
 	OfficialDiscordSchematic = 'OfficialDiscordSchematic',
 	OfficialDiscordCuratedSchematic = 'OfficialDiscordCuratedSchematic',
 }
+
+export enum MindustryVersion {
+	V5 = 'V5',
+	V6 = 'V6',
+	V7 = 'V7',
+}

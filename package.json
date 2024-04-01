@@ -6,6 +6,7 @@
 	"scripts": {
 		"build:dump": "tsc",
 		"parseDumps": "tsx ./src/ParseDumps.ts",
+		"groupByMindustryVersion": "tsx ./src/GroupByMindustryVersion.ts",
 		"clean:schematics": "rimraf ./schematics",
 		"prettier:fix": "prettier -w \"./src/**/*.{ts,json}\"",
 		"prettier:check": "prettier -c \"./src/**/*.{ts,json}\""
@@ -28,6 +29,7 @@
 		"typescript": "^5.4.3"
 	},
 	"dependencies": {
-		"@datastructures-js/queue": "^4.2.3"
+		"@datastructures-js/queue": "^4.2.3",
+		"mutf-8": "^1.1.2"
 	}
 }
