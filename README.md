@@ -11,3 +11,4 @@ Collection of schematics posted on Official Mindustry Discord #schematics and #c
 
 -   Anuke was here
 -   Anuke was here twice
+-   The first 2 notes was a _joke_ and Anuke never went here.
